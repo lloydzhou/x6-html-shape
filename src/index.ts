@@ -173,6 +173,7 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
       top: y + height * scale / 2 + "px",
       left: x + width * scale / 2 + "px",
       position: "absolute",
+      "pointer-events": "auto",
       "transform-origin": "center",
       transform: `translate(-50%, -50%) rotate(${angle}) scale(${scale})`
     });
