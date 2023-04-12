@@ -2,6 +2,11 @@
 
 html shape for [@antv/x6](https://github.com/antvis/X6)
 
+<a href="https://www.npmjs.com/package/x6-html-shape"><img alt="NPM Package" src="https://img.shields.io/npm/v/x6-html-shape.svg?style=flat-square"></a>
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/x6-html-shape?style=flat-square)
+![npm](https://img.shields.io/npm/dm/x6-html-shape?style=flat-square)
+<a href="/LICENSE"><img src="https://img.shields.io/github/license/lloydzhou/x6-html-shape?style=flat-square" alt="MIT License"></a>
+
 ## online demo
 
 [codesandbox demo](https://codesandbox.io/s/html-shape-for-x6-0y71sv)

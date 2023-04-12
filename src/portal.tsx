@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useMemo } from 'react'
-import { createPortal } from 'react-dom';
+import React, { useState, useCallback, useMemo } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * import { register } from 'x6-html-shape'
@@ -26,30 +26,36 @@ import { createPortal } from 'react-dom';
  * })
  */
 
-
 export default function createRender(Component) {
-
-  let connect = () => null
-  let disconnect = () => null
+  let connect = () => null;
+  let disconnect = () => null;
 
   function render(node, graph, container) {
-    const id = `${graph.cid}:${node.id}`
-    const portal = createPortal(<Component node={node} graph={graph} />, container)
-    connect(id, protal)
-    return () => disconnect(id)
+    const id = `${graph.cid}:${node.id}`;
+    const portal = createPortal(
+      <Component node={node} graph={graph} />,
+      container
+    );
+    connect(id, portal);
+    return () => disconnect(id);
   }
 
   function Provider() {
-    const [nodes, setNodes] = useState({})
-    connect = useCallback((id, protal) => {
-      setNodes({ ...nodes, id: protal })
-    }, [nodes])
-    disconnect = useCallback((id) => {
-      setNodes({ ...nodes, id: undefined })
-    }, [nodes])
-    return useMemo(() => Object.values(nodes).filter(i => i), [nodes])
+    const [nodes, setNodes] = useState({});
+    connect = useCallback(
+      (id, portal) => {
+        setNodes({ ...nodes, id: portal });
+      },
+      [nodes]
+    );
+    disconnect = useCallback(
+      (id) => {
+        setNodes({ ...nodes, id: undefined });
+      },
+      [nodes]
+    );
+    return useMemo(() => Object.values(nodes).filter((i) => i), [nodes]);
   }
 
-  return [render, Provider]
+  return [render, Provider];
 }
-
