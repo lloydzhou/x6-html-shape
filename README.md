@@ -39,3 +39,12 @@ graph.addNode({
 
 ```
 
+## 事件穿透
+1. 由于DOM层级关系，html-shape实现的节点总是在svg上层
+2. 通过给`x6-html-shape-container`设置`pointer-events: none`屏蔽这一层的交互，使得鼠标事件能穿透到svg内部节点
+3. 但是`x6-html-shape-node`内部有一些元素是需要交互的，所以，这里需要开发者自己打开（这里没有默认打开的原因是默认将`x6-html-shape-node`打开之后节点的拖动等交互会受影响）。
+
+### TODO
+1. 以后看一下这个地方的事件是否需要集中的做一下`转发`操作，让`x6-html-shape-node`的一些事件能传递到`x6-node`内部？
+
+

@@ -141,8 +141,8 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
 
   ensureComponentContainer() {
     if (!this.graph.htmlContainer) {
-      this.graph.htmlContainer = View.createElement("div", false);
-      css(this.graph.htmlContainer, {
+      const htmlContainer = this.graph.htmlContainer = View.createElement("div", false);
+      css(htmlContainer, {
         background: "transparent",
         width: "100%",
         height: "100%",
@@ -152,30 +152,33 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
         left: "50%",
         transform: "translate(-50%, -50%)"
       });
-      this.graph.container.append(this.graph.htmlContainer);
+      htmlContainer.classList.add('x6-html-shape-container')
+      this.graph.container.append(htmlContainer);
     }
     if (!this.componentContainer) {
-      this.componentContainer = View.createElement("div", false);
-      this.graph.htmlContainer.append(this.componentContainer);
+      const container = this.componentContainer = View.createElement("div", false);
+      container.classList.add('x6-html-shape-node')
+      this.graph.htmlContainer.append(container);
     }
     return this.componentContainer;
   }
   updateTransform() {
     super.updateTransform();
     const container = this.ensureComponentContainer();
-    const { x, y } = this.graph.localToGraph(this.cell.getPosition());
-    const { width, height } = this.cell.getSize();
-    const angle = this.cell.getAngle()
-    const scale = this.graph.transform.getZoom()
+    const { transform, localToGraph } = this.graph
+    const { getPosition, getSize, getAngle } = this.cell
+    const { x, y } = localToGraph(getPosition());
+    const { width, height } = getSize();
+    const scale = transform.getZoom()
     css(container, {
       height: height + "px",
       width: width + "px",
       top: y + height * scale / 2 + "px",
       left: x + width * scale / 2 + "px",
       position: "absolute",
-      "pointer-events": "auto",
+      // "pointer-events": "auto", // 这里由用户自己手动控制？
       "transform-origin": "center",
-      transform: `translate(-50%, -50%) rotate(${angle}) scale(${scale})`
+      transform: `translate(-50%, -50%) rotate(${getAngle()}) scale(${scale})`
     });
   }
 }
