@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Graph, Node, Cell, View, NodeView, ObjectExt } from "@antv/x6";
-import { css } from "./utils";
+import { css, forwardEvent } from "./utils";
 
 export interface HTMLShapeProperties extends Node.Properties {}
 
@@ -148,9 +148,9 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
         height: "100%",
         position: "absolute",
         "pointer-events": "none",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)"
+        "user-select": "none",
+        top: 0,
+        left: 0,
       });
       htmlContainer.classList.add('x6-html-shape-container')
       this.graph.container.append(htmlContainer);
@@ -158,6 +158,11 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
     if (!this.componentContainer) {
       const container = this.componentContainer = View.createElement("div", false);
       container.classList.add('x6-html-shape-node')
+      // forward events
+      const events = "click,dblclick,contextmenu,mousedown,mousemove,mouseup,mouseover,mouseout,mouseenter,mouseleave,mousewheel".split(",");
+      events.forEach((eventType) =>
+        forwardEvent(eventType, container, this.container)
+      );
       this.graph.htmlContainer.append(container);
     }
     return this.componentContainer;
@@ -165,20 +170,21 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
   updateTransform() {
     super.updateTransform();
     const container = this.ensureComponentContainer();
-    const { transform, localToGraph } = this.graph
-    const { getPosition, getSize, getAngle } = this.cell
-    const { x, y } = localToGraph(getPosition());
-    const { width, height } = getSize();
-    const scale = transform.getZoom()
+    const { x, y } = this.graph.localToGraph(this.cell.getPosition());
+    const { width, height } = this.cell.getSize();
+    const scale = this.graph.transform.getZoom()
+    const cursor = getComputedStyle(this.container).cursor;
     css(container, {
+      cursor,
       height: height + "px",
       width: width + "px",
       top: y + height * scale / 2 + "px",
       left: x + width * scale / 2 + "px",
       position: "absolute",
-      // "pointer-events": "auto", // 这里由用户自己手动控制？
+      "z-index": this.cell.getZIndex(),
+      "pointer-events": "auto", // 这里由用户自己手动控制？
       "transform-origin": "center",
-      transform: `translate(-50%, -50%) rotate(${getAngle()}) scale(${scale})`
+      transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}) scale(${scale})`
     });
   }
 }

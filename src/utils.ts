@@ -3,3 +3,11 @@ export function css(e, styles) {
     e.style[property] = styles[property];
   }
 }
+
+export function forwardEvent(eventType, fromElement, toElement) {
+  fromElement.addEventListener(eventType, function (event) {
+    toElement.dispatchEvent(new event.constructor(event.type, event));
+    event.preventDefault();
+    event.stopPropagation();
+  });
+}
