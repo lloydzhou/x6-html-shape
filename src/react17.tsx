@@ -1,4 +1,5 @@
-import * as ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom';
 
 export default function createRender(Component) {
   return function render(node, graph, container) {
