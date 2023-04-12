@@ -59,3 +59,4 @@ export default function createRender(Component) {
 
   return [render, Provider];
 }
+

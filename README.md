@@ -1,4 +1,4 @@
-# x6-html-shape
+e x6-html-shape
 
 html shape for [@antv/x6](https://github.com/antvis/X6)
 
@@ -67,7 +67,7 @@ export function forwardEvent(eventType, fromElement, toElement) {
 
 ## react18
 ```
-import createRender from 'x6-html-shape/react'
+import createRender from 'x6-html-shape/dist/react'
 
 const render = createRender(Component)
 
@@ -81,7 +81,7 @@ register({
 
 ## react17
 ```
-import createRender from 'x6-html-shape/react17'
+import createRender from 'x6-html-shape/dist/react17'
 
 const render = createRender(Component)
 
@@ -96,7 +96,7 @@ register({
 ## react-portal
 ```
 import { register } from 'x6-html-shape'
-import createRender from 'x6-html-shape/portal'
+import createRender from 'x6-html-shape/dist/portal'
 // 1. createRender using Component
  const [render, Provider] = createRender(Component)
 2. register node
