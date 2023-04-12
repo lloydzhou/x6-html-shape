@@ -47,4 +47,14 @@ graph.addNode({
 ### TODO
 1. 以后看一下这个地方的事件是否需要集中的做一下`转发`操作，让`x6-html-shape-node`的一些事件能传递到`x6-node`内部？
 
+```
+export function forwardEvent(eventType, fromElement, toElement) {
+  fromElement.addEventListener(eventType, function (event) {
+    toElement.dispatchEvent(new event.constructor(event.type, event));
+    event.preventDefault();
+    event.stopPropagation();
+  });
+}
+```
+
 
