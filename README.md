@@ -58,3 +58,58 @@ export function forwardEvent(eventType, fromElement, toElement) {
 ```
 
 
+# react
+
+## react18
+```
+import createRender from 'x6-html-shape/react'
+
+const render = createRender(Component)
+
+register({
+  shape: 'react18-node',
+  render,
+  width: 100,
+  height: 40,
+})
+```
+
+## react17
+```
+import createRender from 'x6-html-shape/react17'
+
+const render = createRender(Component)
+
+register({
+  shape: 'react18-node',
+  render,
+  width: 100,
+  height: 40,
+})
+```
+
+## react-portal
+```
+import { register } from 'x6-html-shape'
+import createRender from 'x6-html-shape/portal'
+// 1. createRender using Component
+ const [render, Provider] = createRender(Component)
+2. register node
+register({
+  shape: 'react-portal-node',
+  render,
+  width: 100,
+  height: 40,
+})
+
+// 3.render Provider in react app before call graph.addNode
+ <Provider />
+// 4. add Node
+graph.addNode({
+  id: 'node1',
+  label: 'node1',
+  x: 100,
+  y: 100,
+})
+```
+

@@ -11,12 +11,17 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: "./src/index.ts",
-        utils: "./src/utils.ts"
+        utils: "./src/utils.ts",
+        react: "./src/react.tsx",
+        react17: "./src/react17.tsx",
+        portal: "./src/portal.tsx",
       },
-      external: ['@antv/x6'],
+      external: ['@antv/x6', 'react', 'react-dom'],
       output: {
         globals: {
-          '@antv/x6': 'X6'
+          '@antv/x6': 'X6',
+          react: 'React',
+          'react-dom': 'ReactDOM'
         }
       }
     }
