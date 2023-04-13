@@ -146,9 +146,9 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
       const htmlContainer = this.graph.htmlContainer = View.createElement("div", false);
       css(htmlContainer, {
         position: "absolute",
-        width: 0;
-        height: 0;
-        "touch-action": "none";
+        width: 0,
+        height: 0,
+        "touch-action": "none",
         "user-select": "none",
       });
       htmlContainer.classList.add('x6-html-shape-container')
