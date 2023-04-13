@@ -15,13 +15,17 @@ export default defineConfig({
         react: "./src/react.tsx",
         react17: "./src/react17.tsx",
         portal: "./src/portal.tsx",
+        vue: "./src/vue.tsx",
+        vue2: "./src/vue2.tsx",
+        teleport: "./src/teleport.tsx",
       },
-      external: ['@antv/x6', 'react', 'react-dom'],
+      external: ['@antv/x6', 'react', 'react-dom', 'vue'],
       output: {
         globals: {
           '@antv/x6': 'X6',
           react: 'React',
-          'react-dom': 'ReactDOM'
+          'react-dom': 'ReactDOM',
+          vue: 'Vue',
         }
       }
     }
