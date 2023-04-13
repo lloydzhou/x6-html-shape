@@ -86,7 +86,7 @@ import createRender from 'x6-html-shape/dist/react17'
 const render = createRender(Component)
 
 register({
-  shape: 'react18-node',
+  shape: 'react17-node',
   render,
   width: 100,
   height: 40,
@@ -111,6 +111,7 @@ register({
  <Provider />
 // 4. add Node
 graph.addNode({
+  shape: 'react-portal-node',
   id: 'node1',
   label: 'node1',
   x: 100,
@@ -118,3 +119,58 @@ graph.addNode({
 })
 ```
 
+# vue
+
+## vue3
+```
+import createRender from 'x6-html-shape/dist/vue'
+
+const render = createRender(Component)
+
+register({
+  shape: 'vue3-node',
+  render,
+  width: 100,
+  height: 40,
+})
+```
+
+## vue2
+```
+import createRender from 'x6-html-shape/dist/vue2'
+
+const render = createRender(Component)
+
+register({
+  shape: 'vue2-node',
+  render,
+  width: 100,
+  height: 40,
+})
+```
+
+## vue3-teleport
+```
+import { register } from 'x6-html-shape'
+import createRender from 'x6-html-shape/dist/teleport'
+// 1. createRender using Component
+ const [render, Provider] = createRender(Component)
+2. register node
+register({
+  shape: 'vue3-teleport-node',
+  render,
+  width: 100,
+  height: 40,
+})
+
+// 3.render Provider in react app before call graph.addNode
+ <Provider />
+// 4. add Node
+graph.addNode({
+  shape: 'vue3-teleport-node',
+  id: 'vue3-teleport-node',
+  label: 'vue3 teleport node',
+  x: 100,
+  y: 100,
+})
+```
