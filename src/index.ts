@@ -184,7 +184,7 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
       "z-index": this.cell.getZIndex(),
       "pointer-events": "auto", // 这里由用户自己手动控制？
       "transform-origin": "center",
-      transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}) scale(${scale})`
+      transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}deg) scale(${scale})`
     });
   }
 }
