@@ -112,9 +112,9 @@ export function register(config: HTMLShapeConfig) {
 export const action = "html" as any;
 
 export class HTMLShapeView extends NodeView<HTMLShape> {
-  // mounted: boolean | () => void
   mounted: any;
   componentContainer: HTMLElement | undefined;
+  onTranslate: any;
 
   confirmUpdate(flag: number) {
     const ret = super.confirmUpdate(flag);
@@ -124,6 +124,7 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
         if (render) {
           const container = this.ensureComponentContainer();
           this.mounted = render(this.cell, this.graph, container) || true;
+          this.graph.on('translate', this.onTranslate = this.updateTransform.bind(this))
         }
       }
     });
@@ -136,6 +137,7 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
     if (this.componentContainer) {
       this.componentContainer.remove();
     }
+    this.graph.off('translate', this.onTranslate)
     return this;
   }
 
@@ -167,7 +169,8 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
     }
     return this.componentContainer;
   }
-  updateTransform() {
+
+  updateTransform(e: any) {
     super.updateTransform();
     const container = this.ensureComponentContainer();
     const { x, y } = this.graph.localToGraph(this.cell.getPosition());
@@ -184,7 +187,7 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
       "z-index": this.cell.getZIndex(),
       "pointer-events": "auto", // 这里由用户自己手动控制？
       "transform-origin": "center",
-      transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}) scale(${scale})`
+      transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}deg) scale(${scale})`
     });
   }
 }
