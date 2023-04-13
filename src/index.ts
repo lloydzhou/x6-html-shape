@@ -145,14 +145,11 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
     if (!this.graph.htmlContainer) {
       const htmlContainer = this.graph.htmlContainer = View.createElement("div", false);
       css(htmlContainer, {
-        background: "transparent",
-        width: "100%",
-        height: "100%",
         position: "absolute",
-        "pointer-events": "none",
+        width: 0;
+        height: 0;
+        "touch-action": "none";
         "user-select": "none",
-        top: 0,
-        left: 0,
       });
       htmlContainer.classList.add('x6-html-shape-container')
       this.graph.container.append(htmlContainer);
@@ -185,7 +182,6 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
       left: x + width * scale / 2 + "px",
       position: "absolute",
       "z-index": this.cell.getZIndex(),
-      "pointer-events": "auto", // 这里由用户自己手动控制？
       "transform-origin": "center",
       transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}deg) scale(${scale})`
     });
