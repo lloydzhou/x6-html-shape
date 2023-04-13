@@ -124,7 +124,9 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
         if (render) {
           const container = this.ensureComponentContainer();
           this.mounted = render(this.cell, this.graph, container) || true;
-          this.graph.on('translate', this.onTranslate = this.updateTransform.bind(this))
+          this.onTranslate = this.updateTransform.bind(this)
+          this.graph.on('translate', this.onTranslate)
+          this.graph.on('scale', this.onTranslate)
         }
       }
     });
@@ -138,6 +140,7 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
       this.componentContainer.remove();
     }
     this.graph.off('translate', this.onTranslate)
+    this.graph.off('scale', this.onTranslate)
     return this;
   }
 
