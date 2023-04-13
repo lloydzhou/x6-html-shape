@@ -112,9 +112,9 @@ export function register(config: HTMLShapeConfig) {
 export const action = "html" as any;
 
 export class HTMLShapeView extends NodeView<HTMLShape> {
-  // mounted: boolean | () => void
   mounted: any;
   componentContainer: HTMLElement | undefined;
+  onTranslate: any;
 
   confirmUpdate(flag: number) {
     const ret = super.confirmUpdate(flag);
@@ -124,7 +124,7 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
         if (render) {
           const container = this.ensureComponentContainer();
           this.mounted = render(this.cell, this.graph, container) || true;
-          this.graph.on('translate', this.updateTransform)
+          this.graph.on('translate', this.onTranslate = this.updateTransform.bind(this))
         }
       }
     });
@@ -137,7 +137,7 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
     if (this.componentContainer) {
       this.componentContainer.remove();
     }
-    this.graph.off('translate', this.updateTransform)
+    this.graph.off('translate', this.onTranslate)
     return this;
   }
 
