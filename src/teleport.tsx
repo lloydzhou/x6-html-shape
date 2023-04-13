@@ -30,13 +30,6 @@ export default function createRender(Component) {
 
   const items = reactive<{ [key: string]: any }>({})
 
-  const connect = (id, teleport) => {
-    items[id]
-  };
-  const disconnect = (id) => {
-    delete items[id]
-  };
-
   function render(node, graph, container) {
     const id = `${graph.view.cid}:${node.id}`;
     items[id] = markRaw(

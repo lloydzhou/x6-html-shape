@@ -31,7 +31,7 @@ export default function createRender(Component) {
   let disconnect = () => null;
 
   function render(node, graph, container) {
-    const id = `${graph.cid}:${node.id}`;
+    const id = `${graph.view.cid}:${node.id}`;
     const portal = createPortal(
       <Component node={node} graph={graph} />,
       container
@@ -44,7 +44,7 @@ export default function createRender(Component) {
     const [nodes, setNodes] = useState({});
     connect = useCallback(
       (id, portal) => {
-        setNodes({ ...nodes, id: portal });
+        setNodes({ ...nodes, [id]: portal });
       },
       [nodes]
     );
