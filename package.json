@@ -28,7 +28,9 @@
   "dependencies": {},
   "scripts": {
     "build:clean": "rm -rf dist && mkdir -p dist",
-    "build": "vite build && tsc -d --skipLibCheck --emitDeclarationOnly --esModuleInterop --declarationDir dist src/index.ts"
+    "build": "vite build && tsc -d --skipLibCheck --emitDeclarationOnly --esModuleInterop --declarationDir dist src/index.ts",
+    "build:react": "tsc -d --skipLibCheck --emitDeclarationOnly --esModuleInterop --declarationDir dist --jsx react-jsx src/react.tsx src/react17.tsx src/portal.tsx",
+    "build:vue": "tsc -d --skipLibCheck --emitDeclarationOnly --esModuleInterop --declarationDir dist --jsx preserve src/vue.tsx src/vue2.tsx src/teleport.tsx"
   },
   "devDependencies": {
     "babel-preset-minify": "^0.5.2",
@@ -41,6 +43,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.3",
-    "vite": "^4.1.0"
+    "vite": "^4.1.0",
+    "vue": "^3.2.47"
   }
 }

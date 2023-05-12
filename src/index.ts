@@ -177,6 +177,8 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
     const { width, height } = this.cell.getSize();
     const scale = this.graph.transform.getZoom()
     const cursor = getComputedStyle(this.container).cursor;
+    const zIndex = this.cell.getZIndex()
+    const isSelected = this.graph.isSelected(this.cell)
     css(container, {
       cursor,
       height: height + "px",
@@ -184,7 +186,8 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
       top: y + height * scale / 2 + "px",
       left: x + width * scale / 2 + "px",
       position: "absolute",
-      "z-index": this.cell.getZIndex(),
+      // set frot when selected.
+      "z-index": isSelected ? 1e9 : zIndex,
       "transform-origin": "center",
       transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}deg) scale(${scale})`
     });

@@ -1,4 +1,4 @@
-import { h, defineComponent, reactive, Teleport, markRaw, Fragment } from "vue";
+import { h, DefineComponent, defineComponent, reactive, Teleport, markRaw, Fragment } from "vue";
 
 /**
  * import { register } from 'x6-html-shape'
@@ -26,6 +26,8 @@ import { h, defineComponent, reactive, Teleport, markRaw, Fragment } from "vue";
  * })
  */
 
+type ComponentType = DefineComponent<{[key: string]: any}, {[key: string]: any}>
+
 export default function createRender(Component) {
 
   const items = reactive<{ [key: string]: any }>({})
@@ -39,7 +41,7 @@ export default function createRender(Component) {
           getNode: () => node,
           getGraph: () => graph,
         }),
-      }),
+      }) as ComponentType,
     )
     return () => {
       delete items[id];
@@ -56,7 +58,7 @@ export default function createRender(Component) {
             Object.keys(items).map((id) => h(items[id])),
           )
       },
-    })
+    }) as ComponentType
   }
 
   return [render, Provider];

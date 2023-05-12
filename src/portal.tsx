@@ -27,8 +27,8 @@ import { createPortal } from "react-dom";
  */
 
 export default function createRender(Component) {
-  let connect = () => null;
-  let disconnect = () => null;
+  let connect = (id: string, portal: any) => null;
+  let disconnect = (id: string) => null;
 
   function render(node, graph, container) {
     const id = `${graph.view.cid}:${node.id}`;

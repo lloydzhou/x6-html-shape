@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 export default function createRender(Component) {
   return function render(node, graph, container) {
+    // @ts-ignore
     const vm = new Vue({
       el: container,
       render(h) {
