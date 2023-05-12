@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Graph, Node, Cell, View, NodeView, ObjectExt } from "@antv/x6";
+import { Graph, Node, Cell, View, NodeView, ObjectExt, Dom } from "@antv/x6";
 import { css, forwardEvent } from "./utils";
 
 export interface HTMLShapeProperties extends Node.Properties {}
@@ -147,12 +147,13 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
   ensureComponentContainer() {
     if (!this.graph.htmlContainer) {
       const htmlContainer = this.graph.htmlContainer = View.createElement("div", false);
-      css(htmlContainer, {
+      Dom.css(htmlContainer, {
         position: "absolute",
         width: 0,
         height: 0,
         "touch-action": "none",
         "user-select": "none",
+        // ensure the node under selection and transform tool.
         "z-index": 0,
       });
       htmlContainer.classList.add('x6-html-shape-container')
@@ -180,14 +181,14 @@ export class HTMLShapeView extends NodeView<HTMLShape> {
     const cursor = getComputedStyle(this.container).cursor;
     const zIndex = this.cell.getZIndex()
     const isSelected = this.graph.isSelected(this.cell)
-    css(container, {
+    Dom.css(container, {
       cursor,
       height: height + "px",
       width: width + "px",
       top: y + height * scale / 2 + "px",
       left: x + width * scale / 2 + "px",
       position: "absolute",
-      // set frot when selected.
+      // set to front when select node.
       "z-index": isSelected ? 1e9 : zIndex,
       "transform-origin": "center",
       transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}deg) scale(${scale})`
