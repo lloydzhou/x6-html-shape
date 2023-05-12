@@ -6,6 +6,7 @@ import { h, DefineComponent, defineComponent, reactive, Teleport, markRaw, Fragm
  *
  * 1. createRender using Component
  * const [render, Provider] = createRender(Component)
+ *
  * 2. register node
  * register({
  *   shape: 'vue-teleport-node',
@@ -16,6 +17,7 @@ import { h, DefineComponent, defineComponent, reactive, Teleport, markRaw, Fragm
  *
  * 3.render Provider in react app before call graph.addNode
  * <Provider />
+ *
  * 4. add Node
  * graph.addNode({
  *   shape: 'vue-teleport-node',

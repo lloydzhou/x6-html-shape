@@ -7,6 +7,7 @@ import { createPortal } from "react-dom";
  *
  * 1. createRender using Component
  * const [render, Provider] = createRender(Component)
+ *
  * 2. register node
  * register({
  *   shape: 'react-portal-node',
@@ -17,6 +18,7 @@ import { createPortal } from "react-dom";
  *
  * 3.render Provider in react app before call graph.addNode
  * <Provider />
+ *
  * 4. add Node
  * graph.addNode({
  *   id: 'node1',
