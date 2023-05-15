@@ -108,8 +108,8 @@ function getConfig(view) {
   };
 }
 
-const FOShape = Node.define(getConfig(FOView));
-const HTMLShape = Node.define(getConfig(HTMLView));
+export const FOShape = Node.define(getConfig(FOView));
+export const HTMLShape = Node.define(getConfig(HTMLView));
 
 const shapeMaps: Record<string, RenderType> = {};
 
@@ -131,11 +131,11 @@ export function register(config: HTMLShapeConfig) {
 }
 
 // register html shape render in foreignobject
-export const registerFOShape(config: HTMLShapeConfig) => register({ inherit: FOShapeName, ...config })
+export const registerFOShape = (config: HTMLShapeConfig) => register({ inherit: FOShapeName, ...config })
 
 export const action = "html" as any;
 
-export class FOShapeView<Shape extends Node = FOShape> extends NodeView<Shape> {
+export class FOShapeView<Shape extends Node = typeof FOShape> extends NodeView<Shape> {
   mounted: any;
   componentContainer: HTMLElement | undefined;
 
@@ -177,7 +177,7 @@ FOShapeView.config({
 });
 
 // extends FOShapeView
-export class HTMLShapeView<Shape extends Node = HTMLShape> extends FOShapeView<Shape> {
+export class HTMLShapeView<Shape extends Node = typeof HTMLShape> extends FOShapeView<Shape> {
   onTranslate: any;
 
   onMounted() {
