@@ -1,20 +1,10 @@
 // @ts-nocheck
-import {
-  Graph,
-  Node,
-  Cell,
-  View,
-  NodeView,
-  Markup,
-  ObjectExt,
-  Dom
-} from "@antv/x6";
+import { Node, View, NodeView, Dom } from "@antv/x6";
 import { forwardEvent } from "./utils";
 import {
   register as registerfo,
   getConfig,
   HTMLShapeConfig,
-  FOShape,
   FOShapeView
 } from "./fobject";
 
@@ -108,4 +98,3 @@ export class HTMLShapeView<
 
 NodeView.registry.register(HTMLView, HTMLShapeView, true);
 Node.registry.register(HTMLShapeName, HTMLShape, true);
-

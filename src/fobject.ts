@@ -1,15 +1,5 @@
 // @ts-nocheck
-import {
-  Graph,
-  Node,
-  Cell,
-  View,
-  NodeView,
-  Markup,
-  ObjectExt,
-  Dom
-} from "@antv/x6";
-import { forwardEvent } from "./utils";
+import { Graph, Node, Cell, View, NodeView, Markup } from "@antv/x6";
 
 export const FOView = "fo-shape-view" as any;
 export const FOShapeName = "fo-shape" as any;
@@ -127,7 +117,9 @@ export function register(config: HTMLShapeConfig) {
 
 export const action = "html" as any;
 
-export class FOShapeView<Shape extends Node = typeof FOShape> extends NodeView<Shape> {
+export class FOShapeView<Shape extends Node = typeof FOShape> extends NodeView<
+  Shape
+> {
   mounted: any;
   componentContainer: HTMLElement | undefined;
 
@@ -170,3 +162,4 @@ FOShapeView.config({
 
 NodeView.registry.register(FOView, FOShapeView, true);
 Node.registry.register(FOShapeName, FOShape, true);
+
