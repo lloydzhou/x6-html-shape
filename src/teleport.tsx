@@ -38,7 +38,7 @@ export default function createRender(Component) {
     const id = `${graph.view.cid}:${node.id}`;
     items[id] = markRaw(
       defineComponent({
-        render: () => h(Teleport, { to: container } as any, [h(Component)]),
+        render: () => h(Teleport, { to: container, node, graph } as any, [h(Component)]),
         provide: () => ({
           getNode: () => node,
           getGraph: () => graph,
@@ -50,18 +50,16 @@ export default function createRender(Component) {
     }
   }
 
-  function Provider() {
-    return defineComponent({
-      setup() {
-        return () =>
-          h(
-            Fragment,
-            {},
-            Object.keys(items).map((id) => h(items[id])),
-          )
-      },
-    }) as ComponentType
-  }
+  const Provider = defineComponent({
+    setup() {
+      return () =>
+        h(
+          Fragment,
+          {},
+          Object.keys(items).map((id) => h(items[id])),
+        )
+    },
+  }) as ComponentType
 
   return [render, Provider];
 }

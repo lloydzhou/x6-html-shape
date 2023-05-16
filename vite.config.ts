@@ -11,6 +11,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: "./src/index.ts",
+        fobject: "./src/fobject.ts",
         utils: "./src/utils.ts",
         react: "./src/react.tsx",
         react17: "./src/react17.tsx",
