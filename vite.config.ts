@@ -19,6 +19,7 @@ export default defineConfig({
         vue: "./src/vue.tsx",
         vue2: "./src/vue2.tsx",
         teleport: "./src/teleport.tsx",
+        svelte: "./src/svelte.tsx",
       },
       external: ['@antv/x6', 'react', 'react-dom', 'vue'],
       output: {
