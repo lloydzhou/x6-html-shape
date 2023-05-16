@@ -50,18 +50,16 @@ export default function createRender(Component) {
     }
   }
 
-  function Provider() {
-    return defineComponent({
-      setup() {
-        return () =>
-          h(
-            Fragment,
-            {},
-            Object.keys(items).map((id) => h(items[id])),
-          )
-      },
-    }) as ComponentType
-  }
+  const Provider = defineComponent({
+    setup() {
+      return () =>
+        h(
+          Fragment,
+          {},
+          Object.keys(items).map((id) => h(items[id])),
+        )
+    },
+  }) as ComponentType
 
   return [render, Provider];
 }
