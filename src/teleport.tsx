@@ -38,7 +38,7 @@ export default function createRender(Component) {
     const id = `${graph.view.cid}:${node.id}`;
     items[id] = markRaw(
       defineComponent({
-        render: () => h(Teleport, { to: container, node, graph } as any, [h(Component)]),
+        render: () => h(Teleport, { to: container } as any, [h(Component, { node, graph })]),
         provide: () => ({
           getNode: () => node,
           getGraph: () => graph,
