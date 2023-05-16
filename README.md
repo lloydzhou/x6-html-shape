@@ -9,7 +9,10 @@ html shape for [@antv/x6](https://github.com/antvis/X6)
 
 ## online demo
 
-[codesandbox demo](https://codesandbox.io/s/html-shape-for-x6-0y71sv)
+[vue codesandbox demo](https://codesandbox.io/s/x6-html-shape-vue-xvvlsh)
+
+[react codesandbox demo](https://codesandbox.io/s/html-shape-for-x6-0y71sv)
+
 ![image](https://user-images.githubusercontent.com/1826685/231785511-1363f084-235f-44cd-b88a-0b88e3be09d2.png)
 
 ## example
