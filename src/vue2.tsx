@@ -6,7 +6,7 @@ export default function createRender(Component) {
     const vm = new Vue({
       el: container,
       render(h) {
-        return h(Component)
+        return h(Component, { node, graph })
       },
       provide() {
         return {

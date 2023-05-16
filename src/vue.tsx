@@ -4,7 +4,7 @@ export default function createRender(Component) {
   return function render(node, graph, container) {
     const vm = createApp({
       render() {
-        return h(Component)
+        return h(Component, { node, graph })
       },
       provide() {
         return {
