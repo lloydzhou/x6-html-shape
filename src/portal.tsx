@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useMemo, useReducer } from "react";
 import { createPortal } from "react-dom";
 
 /**
@@ -29,8 +29,8 @@ import { createPortal } from "react-dom";
  */
 
 export default function createRender(Component) {
-  let connect = (id: string, portal: any) => null;
-  let disconnect = (id: string) => null;
+  let nodes = [];
+  let dispatch = (action: any) => null;
 
   function render(node, graph, container) {
     const id = `${graph.view.cid}:${node.id}`;
@@ -38,24 +38,14 @@ export default function createRender(Component) {
       <Component node={node} graph={graph} />,
       container
     );
-    connect(id, portal);
-    return () => disconnect(id);
+    dispatch({ id, portal });
+    return () => dispatch({ id });
   }
 
   function Provider() {
-    const [nodes, setNodes] = useState({});
-    connect = useCallback(
-      (id, portal) => {
-        setNodes({ ...nodes, [id]: portal });
-      },
-      [nodes]
-    );
-    disconnect = useCallback(
-      (id) => {
-        setNodes({ ...nodes, id: undefined });
-      },
-      [nodes]
-    );
+    [nodes, dispatch] = useReducer((nodes, action) => {
+      return { ...nodes, [action.id]: action.portal };
+    }, {});
     return useMemo(() => Object.values(nodes).filter((i) => i), [nodes]);
   }
 
