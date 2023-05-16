@@ -9,6 +9,8 @@ html shape for [@antv/x6](https://github.com/antvis/X6)
 
 ## online demo
 
+[svelte codesandbox demo](https://codesandbox.io/s/x6-html-shape-svelte-5t1r9r)
+
 [vue codesandbox demo](https://codesandbox.io/s/x6-html-shape-vue-xvvlsh)
 
 [react codesandbox demo](https://codesandbox.io/s/html-shape-for-x6-0y71sv)
@@ -175,6 +177,29 @@ graph.addNode({
   shape: 'vue3-teleport-node',
   id: 'vue3-teleport-node',
   label: 'vue3 teleport node',
+  x: 100,
+  y: 100,
+})
+```
+
+# svelte
+```
+import { register } from 'x6-html-shape'
+import createRender from 'x6-html-shape/dist/svelte'
+// 1. createRender using Component
+ const render = createRender(Component)
+2. register node
+register({
+  shape: 'svelte-node',
+  render,
+  width: 100,
+  height: 40,
+})
+
+// 3. add Node
+graph.addNode({
+  shape: 'svelte-node',
+  label: 'svelte node',
   x: 100,
   y: 100,
 })
