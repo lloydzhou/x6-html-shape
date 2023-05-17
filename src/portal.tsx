@@ -29,8 +29,7 @@ import { createPortal } from "react-dom";
  */
 
 export default function createRender(Component) {
-  let nodes = [];
-  let dispatch = (action: any) => null;
+  let dispatch: React.Dispatch<any>;
 
   function render(node, graph, container) {
     const id = `${graph.view.cid}:${node.id}`;
@@ -43,12 +42,12 @@ export default function createRender(Component) {
   }
 
   function Provider() {
-    [nodes, dispatch] = useReducer((nodes, action) => {
+    const [nodes, mutate] = useReducer((nodes, action) => {
       return { ...nodes, [action.id]: action.portal };
     }, {});
+    dispatch = mutate;
     return useMemo(() => Object.values(nodes).filter((i) => i), [nodes]);
   }
 
   return [render, Provider];
 }
-
