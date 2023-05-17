@@ -1,26 +1,114 @@
 // @ts-nocheck
-import { Node, View, NodeView, Dom } from "@antv/x6";
-import { forwardEvent } from "./utils";
-import {
-  register as registerfo,
-  getConfig,
-  HTMLShapeConfig,
-  FOShapeView
-} from "./fobject";
+import { Graph, Node,  Cell, View, NodeView, Dom } from "@antv/x6";
+import { forwardEvent, getConfig, clickable, isInputElement } from "./utils";
 
-export const HTMLView = "html-shape-view" as any;
+// == Shape
 export const HTMLShapeName = "html-shape" as any;
-
+export const HTMLView = "html-shape-view" as any;
 export const HTMLShape = Node.define(getConfig(HTMLView));
+// == end Shape
+
+// == types and register
+export type RenderType = (
+  node: Cell,
+  graph: Graph,
+  container: HTMLElement
+) => () => void;
+
+export type HTMLShapeConfig = Node.Properties & {
+  shape: string;
+  render: RenderType;
+  inherit?: string;
+};
+
+const shapeMaps: Record<string, RenderType> = {};
+// == end HTMLShapeView
 
 // register html shape render on top of svg.
-export const register = (config: HTMLShapeConfig) =>
-  registerfo({ inherit: HTMLShapeName, ...config });
+export function register(config: HTMLShapeConfig) {
+  const { shape, render, inherit = HTMLShapeName, ...others } = config;
+  if (!shape) {
+    throw new Error("should specify shape in config");
+  }
+  shapeMaps[shape] = render;
+  Graph.registerNode(
+    shape,
+    {
+      inherit,
+      ...others
+    },
+    true
+  );
+}
+// == end types and register
 
-// extends FOShapeView
+// == base view
+export const action = "html" as any;
+
+export class BaseHTMLShapeView<Shape extends Node> extends NodeView<Shape> {
+  mounted: any;
+  componentContainer: HTMLElement | undefined;
+
+  confirmUpdate(flag: number) {
+    const ret = super.confirmUpdate(flag);
+    return this.handleAction(ret, action, () => {
+      if (!this.mounted) {
+        const render = shapeMaps[this.cell.shape];
+        const container = this.ensureComponentContainer();
+        if (render && container) {
+          this.mounted = render(this.cell, this.graph, container) || true;
+          this.onMounted();
+        }
+      }
+    });
+  }
+  ensureComponentContainer() {}
+  onMounted() {}
+  onUnMount() {}
+  unmount() {
+    if (typeof this.mounted === "function") {
+      this.mounted();
+    }
+    if (this.componentContainer) {
+      this.componentContainer.remove();
+    }
+    this.onUnMount();
+    return this;
+  }
+  onMouseDown(e: any, x: number, y: number) {
+    // 避免处于foreignObject内部元素触发onMouseDown导致节点被拖拽
+    // 拖拽的时候是以onMouseDown启动的
+    const target = e?.target as Element;
+    if (clickable(target) || isInputElement(target)) {
+      return;
+    }
+    super.onMouseDown(e, x, y);
+  }
+  onMouseUp(e: any, x: number, y: number) {
+    // 避免处于foreignObject内部元素触发onMouseDown导致节点被拖拽
+    // 拖拽的时候是以onMouseDown启动的
+    const target = e?.target as Element;
+    if (clickable(target) || isInputElement(target)) {
+      return;
+    }
+    super.onMouseUp(e, x, y);
+  }
+}
+
+BaseHTMLShapeView.config({
+  bootstrap: [action],
+  actions: {
+    component: action
+  }
+});
+
+// == end base view
+
+// == HTMLShapeView
+
 export class HTMLShapeView<
   Shape extends Node = typeof HTMLShape
-> extends FOShapeView<Shape> {
+> extends BaseHTMLShapeView<Shape> {
   onTranslate: any;
 
   onMounted() {
@@ -95,6 +183,7 @@ export class HTMLShapeView<
     });
   }
 }
+// == end HTMLShapeView
 
 NodeView.registry.register(HTMLView, HTMLShapeView, true);
 Node.registry.register(HTMLShapeName, HTMLShape, true);
