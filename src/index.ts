@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Graph, Node,  Cell, View, NodeView, Dom } from "@antv/x6";
+import { Graph, Node, Cell, View, NodeView, Dom } from "@antv/x6";
 import { forwardEvent, getConfig, clickable, isInputElement } from "./utils";
 
 // == Shape
@@ -58,9 +58,19 @@ export class BaseHTMLShapeView<Shape extends Node> extends NodeView<Shape> {
         if (render && container) {
           this.mounted = render(this.cell, this.graph, container) || true;
           this.onMounted();
+          // 避免处于foreignObject内部元素（或者html元素）触发onMouseDown导致节点被拖拽
+          // 拖拽的时候是以onMouseDown启动的
+          container.addEventListener("mousedown", this.prevEvent, true);
+          container.addEventListener("mouseup", this.prevEvent, true);
         }
       }
     });
+  }
+  prevEvent(e) {
+    if (clickable(e.target) || isInputElement(e.target)) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }
   ensureComponentContainer() {}
   onMounted() {}
@@ -74,24 +84,6 @@ export class BaseHTMLShapeView<Shape extends Node> extends NodeView<Shape> {
     }
     this.onUnMount();
     return this;
-  }
-  onMouseDown(e: any, x: number, y: number) {
-    // 避免处于foreignObject内部元素触发onMouseDown导致节点被拖拽
-    // 拖拽的时候是以onMouseDown启动的
-    const target = e?.target as Element;
-    if (clickable(target) || isInputElement(target)) {
-      return;
-    }
-    super.onMouseDown(e, x, y);
-  }
-  onMouseUp(e: any, x: number, y: number) {
-    // 避免处于foreignObject内部元素触发onMouseDown导致节点被拖拽
-    // 拖拽的时候是以onMouseDown启动的
-    const target = e?.target as Element;
-    if (clickable(target) || isInputElement(target)) {
-      return;
-    }
-    super.onMouseUp(e, x, y);
   }
 }
 
@@ -172,6 +164,7 @@ export class HTMLShapeView<
     // TODO set to front when drag node
     const isSelected = this.graph.isSelected(this.cell);
     Dom.css(container, {
+      "pointer-events": "auto",
       cursor,
       height: height + "px",
       width: width + "px",

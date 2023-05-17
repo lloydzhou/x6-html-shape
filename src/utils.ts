@@ -21,8 +21,8 @@ export function forwardEvent(eventType, fromElement, toElement) {
   });
 }
 
-export function clickable(elem: Element): boolean {
-  if (!elem || !Dom.isHTMLElement(elem)) {
+export function clickable(elem: Element, depth=3): boolean {
+  if (!elem || !Dom.isHTMLElement(elem) || depth <= 0) {
     return false;
   }
   if (["a", "button"].includes(Dom.tagName(elem))) {
@@ -34,7 +34,7 @@ export function clickable(elem: Element): boolean {
   ) {
     return true;
   }
-  return clickable(elem.parentNode as Element);
+  return clickable(elem.parentNode as Element, depth - 1);
 }
 
 export function isInputElement(elem: any): boolean {
