@@ -131,10 +131,12 @@ export class HTMLShapeView<
       ));
       Dom.css(htmlContainer, {
         position: "absolute",
-        width: 0,
-        height: 0,
+        width: "100%",
+        height: "100%",
         "touch-action": "none",
         "user-select": "none",
+        "pointer-events": "none",
+        overflow: "hidden",
         // ensure the node under selection and transform tool.
         "z-index": 0
       });
