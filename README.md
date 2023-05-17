@@ -7,6 +7,8 @@ html shape for [@antv/x6](https://github.com/antvis/X6)
 ![npm](https://img.shields.io/npm/dm/x6-html-shape?style=flat-square)
 <a href="/LICENSE"><img src="https://img.shields.io/github/license/lloydzhou/x6-html-shape?style=flat-square" alt="MIT License"></a>
 
+![image](https://github.com/lloydzhou/x6-html-shape/assets/1826685/1ea8cbc4-49f1-478b-a0b7-228eea993f88)
+
 ## online demo
 
 [svelte codesandbox demo](https://codesandbox.io/s/x6-html-shape-svelte-5t1r9r)
