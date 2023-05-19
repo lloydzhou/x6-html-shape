@@ -168,13 +168,14 @@ export class HTMLShapeView<
       cursor,
       height: height + "px",
       width: width + "px",
-      top: y + (height * scale) / 2 + "px",
-      left: x + (width * scale) / 2 + "px",
+      // using translate instead top+left
+      // top: y + (height * scale) / 2 + "px",
+      // left: x + (width * scale) / 2 + "px",
       position: "absolute",
       // set to front when select node.
       "z-index": isSelected ? 1e9 : zIndex,
       "transform-origin": "center",
-      transform: `translate(-50%, -50%) rotate(${this.cell.getAngle()}deg) scale(${scale})`
+      transform: `translate(${x}px, ${y}px) rotate(${this.cell.getAngle()}deg) scale(${scale})`
     });
   }
 }
