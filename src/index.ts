@@ -140,6 +140,14 @@ export class HTMLShapeView<
         "div",
         false
       ));
+      // set default css for componentcontainer
+      Dom.css(container, {
+        "pointer-events": "auto",
+        "touch-action": "none",
+        "user-select": "none",
+        "transform-origin": "center",
+        position: "absolute",
+      })
       container.classList.add("x6-html-shape-node");
       // forward events
       const events = "click,dblclick,contextmenu,mousedown,mousemove,mouseup,mouseover,mouseout,mouseenter,mouseleave,mousewheel".split(
@@ -164,17 +172,11 @@ export class HTMLShapeView<
     // TODO set to front when drag node
     const isSelected = this.graph.isSelected(this.cell);
     Dom.css(container, {
-      "pointer-events": "auto",
       cursor,
       height: height + "px",
       width: width + "px",
-      // using translate instead top+left
-      // top: y + (height * scale) / 2 + "px",
-      // left: x + (width * scale) / 2 + "px",
-      position: "absolute",
       // set to front when select node.
       "z-index": isSelected ? 1e9 : zIndex,
-      "transform-origin": "center",
       transform: `translate(${x}px, ${y}px) rotate(${this.cell.getAngle()}deg) scale(${scale})`
     });
   }
