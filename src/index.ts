@@ -170,7 +170,7 @@ export class HTMLShapeView<
     const cursor = getComputedStyle(this.container).cursor;
     const zIndex = this.cell.getZIndex();
     // TODO set to front when drag node
-    const isSelected = this.graph.isSelected(this.cell);
+    const isSelected = this.graph.isSelected && this.graph.isSelected(this.cell);
     Dom.css(container, {
       cursor,
       height: height + "px",
