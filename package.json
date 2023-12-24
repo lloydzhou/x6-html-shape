@@ -1,6 +1,6 @@
 {
   "name": "x6-html-shape",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "type": "module",
   "files": [
     "dist"
@@ -18,6 +18,7 @@
     "typescript"
   ],
   "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "lloydzhou",
   "license": "MIT",
   "homepage": "https://github.com/lloydzhou/x6-html-shape",
@@ -25,14 +26,15 @@
     "type": "git",
     "url": "git@github.com:lloydzhou/x6-html-shape.git"
   },
-  "dependencies": {},
   "scripts": {
     "build:clean": "rm -rf dist && mkdir -p dist",
-    "build": "vite build && tsc -d --skipLibCheck --emitDeclarationOnly --esModuleInterop --declarationDir dist src/index.ts",
+    "build:all": "npm run build && npm run build:react && npm run build:vue",
+    "build": "vite build && tsc -d --skipLibCheck --emitDeclarationOnly --esModuleInterop --declarationDir dist src/index.ts src/fobject.ts src/svelte.tsx",
     "build:react": "tsc -d --skipLibCheck --emitDeclarationOnly --esModuleInterop --declarationDir dist --jsx react-jsx src/react.tsx src/react17.tsx src/portal.tsx",
     "build:vue": "tsc -d --skipLibCheck --emitDeclarationOnly --esModuleInterop --declarationDir dist --jsx preserve src/vue.tsx src/vue2.tsx src/teleport.tsx"
   },
   "devDependencies": {
+    "@antv/x6": "^2.16.1",
     "babel-preset-minify": "^0.5.2",
     "eslint": "^8.34.0",
     "eslint-config-react-app": "^7.0.1",
@@ -42,6 +44,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "svelte": "^4.2.8",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
     "vue": "^3.2.47"

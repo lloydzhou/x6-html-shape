@@ -46,6 +46,7 @@ export default function createRender(Component) {
       return { ...nodes, [action.id]: action.portal };
     }, {});
     dispatch = mutate;
+    // @ts-ignore
     return useMemo(() => Object.values(nodes).filter((i) => i), [nodes]);
   }
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Graph, Cell } from "@antv/x6";
 import type { SvelteComponentTyped } from "svelte"
 
