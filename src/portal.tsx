@@ -29,7 +29,9 @@ import { createPortal } from "react-dom";
  */
 
 export default function createRender(Component) {
-  let dispatch: React.Dispatch<any>;
+  let dispatch: React.Dispatch<any> = (data: any) => {
+    console.warn('please mount the Provider to react app.')
+  };
 
   function render(node, graph, container) {
     const id = `${graph.view.cid}:${node.id}`;
