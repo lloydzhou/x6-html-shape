@@ -102,7 +102,19 @@ export class HTMLShapeView<
   Shape extends Node = typeof HTMLShape
 > extends BaseHTMLShapeView<Shape> {
   onTranslate: any;
-
+  constructor(...args) {
+    super(...args)
+    this.cell.on('change:visible', ({ cell }) => {
+      if (cell.view === HTMLView) {
+        const view = this.graph.findViewByCell(cell.id)
+        view &&
+          Promise.resolve().then(() => {
+            // 事件回调可能有多个，保证最后一个执行
+            view.componentContainer.style.display = view.container.style.display
+          })
+      }
+    })
+  }
   onMounted() {
     this.onTranslate = this.updateTransform.bind(this);
     this.graph.on("translate", this.onTranslate);
