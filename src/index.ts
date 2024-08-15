@@ -142,7 +142,8 @@ export class HTMLShapeView<
         "pointer-events": "none",
         overflow: "hidden",
         // ensure the node under selection and transform tool.
-        "z-index": 0
+        'z-index': 0,
+        'transform-origin': 'left top',
       });
       htmlContainer.classList.add("x6-html-shape-container");
       this.graph.container.append(htmlContainer);
@@ -176,7 +177,7 @@ export class HTMLShapeView<
   updateTransform(e: any) {
     super.updateTransform();
     const container = this.ensureComponentContainer();
-    const { x, y } = this.graph.localToGraph(this.cell.getPosition());
+    const { x, y } = this.cell.getPosition()
     const { width, height } = this.cell.getSize();
     const scale = this.graph.transform.getZoom();
     const cursor = getComputedStyle(this.container).cursor;
@@ -189,8 +190,14 @@ export class HTMLShapeView<
       width: width + "px",
       // set to front when select node.
       "z-index": isSelected ? 1e9 : zIndex,
-      transform: `translate(${x}px, ${y}px) rotate(${this.cell.getAngle()}deg) scale(${scale})`
+      transform: `translate(${x}px, ${y}px) rotate(${this.cell.getAngle()}deg)`,
     });
+    const { offsetHeight, offsetWidth } = this.graph.container
+    Dom.css(this.graph.htmlContainer, {
+      transform: `scale(${scale})`,
+      width: offsetWidth / scale || '100%',
+      height: offsetHeight / scale || '100%',
+    })
   }
 }
 // == end HTMLShapeView
