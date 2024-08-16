@@ -140,7 +140,6 @@ export class HTMLShapeView<
         "touch-action": "none",
         "user-select": "none",
         "pointer-events": "none",
-        overflow: "hidden",
         // ensure the node under selection and transform tool.
         'z-index': 0,
         'transform-origin': 'left top',
