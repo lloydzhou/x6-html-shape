@@ -115,16 +115,17 @@ export class HTMLShapeView<
       }
     })
   }
+
   onMounted() {
-    this.onTranslate = this.updateTransform.bind(this);
-    this.graph.on("translate", this.onTranslate);
-    this.graph.on("scale", this.onTranslate);
-    this.graph.on("node:change:position", this.onTranslate);
-  }
-  onUnMount() {
-    this.graph.off("translate", this.onTranslate);
-    this.graph.off("scale", this.onTranslate);
-    this.graph.off("node:change:position", this.onTranslate);
+    if (this.graph.listeners?.hasTransformEvent?.length) {
+      return
+    }
+    this.onTranslate = this.updateHtmlContainerSize.bind(this)
+    this.graph.on('translate', this.onTranslate)
+    this.graph.on('scale', this.onTranslate)
+    this.graph.on('node:change:position', this.onTranslate)
+    // 注册一个不存在的事件，用来判断是否有监听过，避免重复监听事件
+    this.graph.on('hasTransformEvent', this.onTranslate)
   }
 
   ensureComponentContainer() {
@@ -178,7 +179,6 @@ export class HTMLShapeView<
     const container = this.ensureComponentContainer();
     const { x, y } = this.cell.getPosition()
     const { width, height } = this.cell.getSize();
-    const scale = this.graph.transform.getZoom();
     const cursor = getComputedStyle(this.container).cursor;
     const zIndex = this.cell.getZIndex();
     // TODO set to front when drag node
@@ -191,11 +191,16 @@ export class HTMLShapeView<
       "z-index": isSelected ? 1e9 : zIndex,
       transform: `translate(${x}px, ${y}px) rotate(${this.cell.getAngle()}deg)`,
     });
-    const { offsetHeight, offsetWidth } = this.graph.container
-    Dom.css(this.graph.htmlContainer, {
-      transform: `scale(${scale})`,
-      width: offsetWidth / scale || '100%',
-      height: offsetHeight / scale || '100%',
+  }
+  updateHtmlContainerSize() {
+    const { graph } = this
+    const scale = graph.transform.getZoom()
+    const matrix = graph.transform.getMatrix()
+    const { offsetHeight, offsetWidth } = graph.container
+    Dom.css(graph.htmlContainer, {
+      transform: `matrix(${matrix['a']}, ${matrix['b']}, ${matrix['c']}, ${matrix['d']}, ${matrix['e']}, ${matrix['f']})`,
+      width: scale !== 1 ? offsetWidth / scale : '100%',
+      height: scale !== 1 ? offsetHeight / scale : '100%',
     })
   }
 }
