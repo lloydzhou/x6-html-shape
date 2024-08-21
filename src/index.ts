@@ -163,7 +163,7 @@ export class HTMLShapeView<
       })
       container.classList.add("x6-html-shape-node");
       // forward events
-      const events = "click,dblclick,contextmenu,mousedown,mousemove,mouseup,mouseover,mouseout,mouseenter,mouseleave,mousewheel".split(
+      const events = "click,dblclick,contextmenu,mousedown,mousemove,mouseup,mouseover,mouseout,mouseenter,mouseleave".split(
         ","
       );
       events.forEach((eventType) =>
