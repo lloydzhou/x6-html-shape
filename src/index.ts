@@ -83,6 +83,7 @@ export class BaseHTMLShapeView<Shape extends Node> extends NodeView<Shape> {
       this.componentContainer.remove();
     }
     this.onUnMount();
+    super.unmount()
     return this;
   }
 }
