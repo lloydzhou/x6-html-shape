@@ -174,9 +174,15 @@ export class HTMLShapeView<
     }
     return this.componentContainer;
   }
-
-  updateTransform(e: any) {
+  resize(){
+    super.resize();
+    this.updateContainerStyle()
+  }
+  updateTransform() {
     super.updateTransform();
+    this.updateContainerStyle()
+  }
+  updateContainerStyle(){
     const container = this.ensureComponentContainer();
     const { x, y } = this.cell.getPosition()
     const { width, height } = this.cell.getSize();
